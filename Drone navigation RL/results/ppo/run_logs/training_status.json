@@ -1,0 +1,29 @@
+{
+    "FlyToGoal": {
+        "checkpoints": [
+            {
+                "steps": 576,
+                "file_path": "results\\ppo\\FlyToGoal\\FlyToGoal-576.onnx",
+                "reward": null,
+                "creation_time": 1668173581.754286,
+                "auxillary_file_paths": [
+                    "results\\ppo\\FlyToGoal\\FlyToGoal-576.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 576,
+            "file_path": "results\\ppo\\FlyToGoal.onnx",
+            "reward": null,
+            "creation_time": 1668173581.754286,
+            "auxillary_file_paths": [
+                "results\\ppo\\FlyToGoal\\FlyToGoal-576.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

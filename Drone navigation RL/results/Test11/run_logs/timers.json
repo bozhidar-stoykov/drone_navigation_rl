@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1668764469",
+        "python_version": "3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\Bojidar\\Software\\Anaconda\\envs\\env\\Scripts\\mlagents-learn config/FlyToGoal.yaml --run-id=Test11",
+        "mlagents_version": "0.28.0",
+        "mlagents_envs_version": "0.28.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.19.5",
+        "end_time_seconds": "1668764470"
+    },
+    "total": 1.5337745999999999,
+    "count": 1,
+    "self": 0.0073737000000000386,
+    "children": {
+        "run_training.setup": {
+            "total": 0.1413315,
+            "count": 1,
+            "self": 0.1413315
+        },
+        "TrainerController.start_learning": {
+            "total": 1.3850694,
+            "count": 1,
+            "self": 0.000220000000000109,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 1.3848409,
+                    "count": 1,
+                    "self": 1.3848409
+                },
+                "TrainerController._save_models": {
+                    "total": 8.499999999855845e-06,
+                    "count": 1,
+                    "self": 8.499999999855845e-06
+                }
+            }
+        }
+    }
+}
