@@ -2145,7 +2145,7 @@ MonoBehaviour:
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 90
   m_SphereCastRadius: 2
-  m_RayLength: 18
+  m_RayLength: 26
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 1

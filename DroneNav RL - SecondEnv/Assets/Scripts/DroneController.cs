@@ -12,6 +12,7 @@ public class DroneController : MonoBehaviour
     private float rearLeftPropThrotle;
     private float rearRightPropThrotle;
     private float previousDistance;
+    private bool grounded;
 
     public event EventHandler OnOutOfMap;
     public event EventHandler<AddScoreEventArgs> OnAddScore;
@@ -45,7 +46,8 @@ public class DroneController : MonoBehaviour
         previousDistance = 0;
         startRotation = transform.rotation;
         startPosition = transform.position;
-        speed = 13;
+        grounded = false;
+        speed = 14;
         agent = gameObject.GetComponent<FlyToGoalAgent>();
     }
 
@@ -143,11 +145,13 @@ public class DroneController : MonoBehaviour
     {
         float distance = Vector3.Distance(rigidbody.position, reward.position);
         float score = previousDistance - distance;
+        //print(distance);
+        float multiplier = 1.5f;
    
         if (score > 0.06f)
-            InvokeAddScore(score * (60 - distance));
+            InvokeAddScore(score * (250 - distance) + 0.5f);
         else if (score < -0.06f)
-            InvokeAddScore(score * distance);
+            InvokeAddScore(score * distance - 0.5f);
 
         previousDistance = distance;
     }
@@ -160,22 +164,38 @@ public class DroneController : MonoBehaviour
             thresholdReward = maxReward / 2000;
 
         if (Math.Abs(rigidbody.rotation.eulerAngles.x) > 110 || Math.Abs(rigidbody.rotation.eulerAngles.z) > 110)
-            InvokeAddScore(-thresholdReward);
+            InvokeAddScore(-thresholdReward * 2);
 
         if (Math.Abs(rigidbody.rotation.eulerAngles.x) < 30 || Math.Abs(rigidbody.rotation.eulerAngles.z) < 30)
             if (maxReward > 3000)
-                InvokeAddScore(thresholdReward / 2);
+                InvokeAddScore(thresholdReward * 2);
     }
     
     private void CheckGrounded()
     {
-        if (rigidbody.position.y < 1.9f)
-            InvokeAddScore(-0.5f);
+        if (grounded)       //rigidbody.position.y < 1.9f &&
+            InvokeAddScore(-0.5f * 2);
         else
         {
             float rewardValue = reward.position.y - Math.Abs(reward.position.y - rigidbody.position.y - 1.2f);
-            rewardValue = rewardValue / 2f;
+            //rewardValue = rewardValue / 2f;
             InvokeAddScore(rewardValue);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.gameObject.tag == "Ground")
+        {
+            grounded = false;
         }
     }
 
@@ -185,7 +205,7 @@ public class DroneController : MonoBehaviour
         float posY = rigidbody.transform.localPosition.y;
         float posZ = rigidbody.transform.localPosition.z;
 
-        if (Math.Abs(posX) > 60 || posY < -2 || Math.Abs(posZ) > 60)
+        if (Math.Abs(posX) > 260 || posY < -2 || Math.Abs(posZ) > 260)
             OnOutOfMap?.Invoke(this, EventArgs.Empty);
     }
     
