@@ -89,7 +89,7 @@ public class FlyToGoalAgent : Agent
             if (!reachedReward)
             {
                 reachedReward = true;
-                AddReward(20000f);
+                AddReward(14000f);
                 IncreaseEpisodeLenght();
             }
 
@@ -155,35 +155,11 @@ public class FlyToGoalAgent : Agent
 
     private void SetRewardRandomPosition(bool initial)
     {
-        float x;
-        float y = Random.Range(5, 14f);
-        float z;
 
-        if (initial)
-        {
-            (float, float) xz = GenerateRandomZandX();
-            x = xz.Item1;
-            z = xz.Item2;
-        }
-
-        else
-        {
-            float absX = Mathf.Abs(goalTransform.localPosition.x);
-            float absZ = Mathf.Abs(goalTransform.localPosition.z);
-
-            if (absX > 6 && absZ > 6)
-            {
-                x = Random.Range(-5f, 5f);
-                z = Random.Range(-5f, 5f);
-            }
-
-            else
-            {
-                (float, float) xz = GenerateRandomZandX();
-                x = xz.Item1;
-                z = xz.Item2;
-            }
-        }
+        Vector3 spawnPosition = controller.spawnPositionScript.spawnPostionsReward[controller.spawnPositionIndex].position;
+        float x = spawnPosition.x;
+        float y = Random.Range(28, 36f);
+        float z = spawnPosition.z;
 
         // Increase y position with Reward
         if (GetCumulativeReward() > 20000)

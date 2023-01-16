@@ -1,0 +1,65 @@
+{
+    "FlyToGoal": {
+        "checkpoints": [
+            {
+                "steps": 8499949,
+                "file_path": "results\\Test2.76\\FlyToGoal\\FlyToGoal-8499949.onnx",
+                "reward": 84297.36228942871,
+                "creation_time": 1670864502.876353,
+                "auxillary_file_paths": [
+                    "results\\Test2.76\\FlyToGoal\\FlyToGoal-8499949.pt"
+                ]
+            },
+            {
+                "steps": 8999981,
+                "file_path": "results\\Test2.76\\FlyToGoal\\FlyToGoal-8999981.onnx",
+                "reward": 68598.94805908203,
+                "creation_time": 1670865839.156807,
+                "auxillary_file_paths": [
+                    "results\\Test2.76\\FlyToGoal\\FlyToGoal-8999981.pt"
+                ]
+            },
+            {
+                "steps": 9499991,
+                "file_path": "results\\Test2.76\\FlyToGoal\\FlyToGoal-9499991.onnx",
+                "reward": null,
+                "creation_time": 1670867269.4144316,
+                "auxillary_file_paths": [
+                    "results\\Test2.76\\FlyToGoal\\FlyToGoal-9499991.pt"
+                ]
+            },
+            {
+                "steps": 9999982,
+                "file_path": "results\\Test2.76\\FlyToGoal\\FlyToGoal-9999982.onnx",
+                "reward": 34424.12651519776,
+                "creation_time": 1670868590.059408,
+                "auxillary_file_paths": [
+                    "results\\Test2.76\\FlyToGoal\\FlyToGoal-9999982.pt"
+                ]
+            },
+            {
+                "steps": 10000046,
+                "file_path": "results\\Test2.76\\FlyToGoal\\FlyToGoal-10000046.onnx",
+                "reward": 34424.12651519776,
+                "creation_time": 1670868590.3493764,
+                "auxillary_file_paths": [
+                    "results\\Test2.76\\FlyToGoal\\FlyToGoal-10000046.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 10000046,
+            "file_path": "results\\Test2.76\\FlyToGoal.onnx",
+            "reward": 34424.12651519776,
+            "creation_time": 1670868590.3493764,
+            "auxillary_file_paths": [
+                "results\\Test2.76\\FlyToGoal\\FlyToGoal-10000046.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

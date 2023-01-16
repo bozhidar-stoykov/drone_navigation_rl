@@ -12,11 +12,14 @@ public class DroneController : MonoBehaviour
     private float rearLeftPropThrotle;
     private float rearRightPropThrotle;
     private float previousDistance;
+    private float maxDistance;
     private bool grounded;
+    private bool firstUpdate;
 
     public event EventHandler OnOutOfMap;
     public event EventHandler<AddScoreEventArgs> OnAddScore;
     private FlyToGoalAgent agent;
+    public SpawnPositions spawnPositionScript;
 
 
     [Header("Physics")]
@@ -30,8 +33,10 @@ public class DroneController : MonoBehaviour
     public Transform rRPPTransform;
     public Transform reward;
     public Rigidbody rigidbody;
+    public GameObject spawnPositions;
     public Vector3 startPosition;
     public int speed=6;
+    public int spawnPositionIndex = 0;
 
     enum Propeller
     {
@@ -45,10 +50,13 @@ public class DroneController : MonoBehaviour
     {
         previousDistance = 0;
         startRotation = transform.rotation;
-        startPosition = transform.position;
+        spawnPositionScript = spawnPositions.GetComponent<SpawnPositions>();
+        startPosition = spawnPositionScript.spawnPostionsDrone[spawnPositionIndex].position;
         grounded = false;
         speed = 14;
         agent = gameObject.GetComponent<FlyToGoalAgent>();
+        maxDistance = Vector3.Distance(rigidbody.position, reward.position);
+        firstUpdate = true;
     }
 
     void FixedUpdate()
@@ -56,11 +64,14 @@ public class DroneController : MonoBehaviour
         CheckGrounded();
         CheckOrientation();
         CheckMapBounderies();
-        CheckDistanceToReward();
+        if (!firstUpdate)
+            CheckDistanceToReward();
+
         ThrottlePropeller(Propeller.FrontLeft, frontLeftPropThrotle, speed);
         ThrottlePropeller(Propeller.FrontRight, frontRightPropThrotle, speed);
         ThrottlePropeller(Propeller.RearLeft, rearLeftPropThrotle, speed);
         ThrottlePropeller(Propeller.RearRight, rearRightPropThrotle, speed);
+        firstUpdate = false;
     }
 
     public void GetInput()
@@ -81,7 +92,7 @@ public class DroneController : MonoBehaviour
 
     public void ResetDrone()
     {
-        transform.position = startPosition;
+        transform.position = spawnPositionScript.spawnPostionsDrone[spawnPositionIndex].position;
         transform.rotation = startRotation;
         rigidbody.velocity = new Vector3(0, 0, 0);
         rigidbody.angularVelocity = new Vector3(0, 0, 0);
@@ -149,9 +160,9 @@ public class DroneController : MonoBehaviour
         float multiplier = 1.5f;
    
         if (score > 0.06f)
-            InvokeAddScore(score * (250 - distance) + 0.5f);
+            InvokeAddScore(multiplier * score * (maxDistance - distance) + 0.5f);
         else if (score < -0.06f)
-            InvokeAddScore(score * distance - 0.5f);
+            InvokeAddScore(multiplier * score * distance - 0.5f);
 
         previousDistance = distance;
     }
@@ -168,7 +179,7 @@ public class DroneController : MonoBehaviour
 
         if (Math.Abs(rigidbody.rotation.eulerAngles.x) < 30 || Math.Abs(rigidbody.rotation.eulerAngles.z) < 30)
             if (maxReward > 3000)
-                InvokeAddScore(thresholdReward * 2);
+                InvokeAddScore(thresholdReward);
     }
     
     private void CheckGrounded()
@@ -205,7 +216,7 @@ public class DroneController : MonoBehaviour
         float posY = rigidbody.transform.localPosition.y;
         float posZ = rigidbody.transform.localPosition.z;
 
-        if (Math.Abs(posX) > 260 || posY < -2 || Math.Abs(posZ) > 260)
+        if (Math.Abs(posX) > 4580 || posY < -10 || Math.Abs(posZ) > 2800)
             OnOutOfMap?.Invoke(this, EventArgs.Empty);
     }
     
